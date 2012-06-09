@@ -3,7 +3,7 @@ import vim
 import time
 import re
 import threading
-import bsddb.db as db
+import bsddb3.db as db
 
 def initClangComplete(clang_complete_flags):
   global index
@@ -272,7 +272,10 @@ def getCurrentCompletions(base):
   return map(formatResult, sortedResult)
 
 def getCurrentUsr():
-  tu = getCurrentTranslationUnit(True)
+  userOptionsGlobal = splitOptions(vim.eval("g:clang_user_options"))
+  userOptionsLocal = splitOptions(vim.eval("b:clang_user_options"))
+  args = userOptionsGlobal + userOptionsLocal
+  tu = getCurrentTranslationUnit(args, getCurrentFile(), vim.current.buffer.name, update = True)
   file = tu.getFile(vim.current.buffer.name)
   loc = tu.getLocation(file, getCurrentLine(), getCurrentColumn())
   cursor = tu.getCursor(loc)
