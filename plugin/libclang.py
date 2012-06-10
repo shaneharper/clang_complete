@@ -4,6 +4,7 @@ import time
 import re
 import threading
 import bsddb3.db as db
+import linecache
 
 def initClangComplete(clang_complete_flags):
   global index
@@ -312,11 +313,14 @@ def getCurrentReferences(searchKind = None):
     line = int(parts[1])
     column = int(parts[2])
     kind = int(parts[3])
-    text = referenceKinds[kind] or kind
+    refKind  = referenceKinds[kind] or kind
+    text = linecache.getline(filename, line).rstrip('\n')
+    if text is not '':
+        text = refKind.rstrip() + ": " + text.strip()
     return {'filename' : filename, 'lnum' : line, 'col' : column, 'text': text, 'kind': kind}
 
   def filtered(quickFixList):
-    quickFixList = filter(lambda x: len(x) > 0, quickFixList) # remove invalid items
+    quickFixList = filter(lambda x: len(x) > 0 and len(x['text']) > 0, quickFixList) # remove invalid items
     vaildKinds = []
     if searchKind == None:
       return quickFixList
