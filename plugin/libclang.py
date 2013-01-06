@@ -3,7 +3,7 @@ import vim
 import time
 import re
 import threading
-import bsddb3.db as db
+import bsddb.db as db
 import linecache
 
 def initClangComplete(clang_complete_flags):
