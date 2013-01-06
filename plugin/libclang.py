@@ -292,12 +292,13 @@ def getCurrentUsr():
 # searchKind is one of ["declarations", "subclasses", None]
 def getCurrentReferences(searchKind = None):
   def loadClic():
-    filename = vim.eval("g:clic_filename")
+    filename = vim.eval("expand(g:clic_filename)")
     clicDb = db.DB()
     try:
       clicDb.open(filename, None, db.DB_BTREE, db.DB_RDONLY)
       return clicDb
     except db.DBNoSuchFileError:
+      print "DBNoSuchFileError", filename
       clicDb.close()
       return None
 
