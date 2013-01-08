@@ -226,6 +226,7 @@ function! s:initClangCompletePython()
 
     exe 'python sys.path = ["' . s:plugin_path . '"] + sys.path'
     exe 'pyfile ' . s:plugin_path . '/libclang.py'
+    exe 'pyfile ' . s:plugin_path . '/clic.py'
     python initClangComplete(vim.eval('g:clang_complete_lib_flags'))
     let s:libclang_loaded = 1
   endif
