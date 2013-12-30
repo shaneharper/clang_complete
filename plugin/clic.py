@@ -35,7 +35,7 @@ def getCurrentReferences(searchKind = None):
       clicDb.open(filename, None, db.DB_BTREE, db.DB_RDONLY)
       return clicDb
     except db.DBNoSuchFileError:
-      print "DBNoSuchFileError", filename
+      print "DBNoSuchFileError, filename =", filename
       clicDb.close()
       return None
 
