@@ -578,36 +578,24 @@ endfunction
 function! ClangGetReferences()
   if g:clang_use_library == 1
     python vim.command('let l:list = ' + str(getCurrentReferences()))
-    if !empty(l:list)
-      copen
-      call setqflist(l:list)
-    else
-      cclose
-    endif
+    call setqflist(l:list)
+    cwindow
   endif
 endfunction
 
 function! ClangGetDeclarations()
   if g:clang_use_library == 1
     python vim.command('let l:list = ' + str(getCurrentReferences('declarations')))
-    if !empty(l:list)
-      copen
-      call setqflist(l:list)
-    else
-      cclose
-    endif
+    call setqflist(l:list)
+    cwindow
   endif
 endfunction
 
 function! ClangGetSubclasses()
   if g:clang_use_library == 1
     python vim.command('let l:list = ' + str(getCurrentReferences('subclasses')))
-    if !empty(l:list)
-      copen
-      call setqflist(l:list)
-    else
-      cclose
-    endif
+    call setqflist(l:list)
+    cwindow
   endif
 endfunction
 
