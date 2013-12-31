@@ -60,7 +60,7 @@ def getCurrentReferences(searchKind = None):
   def filtered(quickFixList):
     quickFixList = filter(lambda x: len(x) > 0 and len(x['text']) > 0, quickFixList) # remove invalid items
     vaildKinds = []
-    if searchKind == None:
+    if not searchKind:
       return quickFixList
     elif searchKind == 'declarations':
       validKinds = range(1, 40)

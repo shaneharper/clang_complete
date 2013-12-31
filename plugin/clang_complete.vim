@@ -575,28 +575,24 @@ function! ClangGetUsr()
   endif
 endfunction
 
-function! ClangGetReferences()
+function! s:ShowCrossReferencesForSymbolUnderCursor(kind)
   if g:clang_use_library == 1
-    python vim.command('let l:list = ' + str(getCurrentReferences()))
-    call setqflist(l:list)
+    python vim.command('let refs = ' + str(getCurrentReferences(vim.eval('a:kind'))))
+    call setqflist(refs)
     cwindow
   endif
+endfunction
+
+function! ClangGetReferences()
+  call s:ShowCrossReferencesForSymbolUnderCursor('')
 endfunction
 
 function! ClangGetDeclarations()
-  if g:clang_use_library == 1
-    python vim.command('let l:list = ' + str(getCurrentReferences('declarations')))
-    call setqflist(l:list)
-    cwindow
-  endif
+  call s:ShowCrossReferencesForSymbolUnderCursor('declarations')
 endfunction
 
 function! ClangGetSubclasses()
-  if g:clang_use_library == 1
-    python vim.command('let l:list = ' + str(getCurrentReferences('subclasses')))
-    call setqflist(l:list)
-    cwindow
-  endif
+  call s:ShowCrossReferencesForSymbolUnderCursor('subclasses')
 endfunction
 
 function! s:HandlePossibleSelectionEnter()
